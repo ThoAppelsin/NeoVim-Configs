@@ -10,7 +10,7 @@ call plug#end()
 
 color two-firewatch
 let g:two_firewatch_italics=1
-set background=light
+set background=dark
 set termguicolors
 set number
 set cursorline
