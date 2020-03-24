@@ -6,11 +6,26 @@ Plug 'PProvost/vim-ps1'
 Plug 'lervag/vimtex'
 Plug 'rakr/vim-two-firewatch'
 Plug 'AndrewRadev/linediff.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/seoul256.vim'
 call plug#end()
 
-color two-firewatch
-let g:two_firewatch_italics=1
-set background=dark
+" seoul256 (dark):
+"   Range:   233 (darkest) ~ 239 (lightest)
+"   Default: 237
+" let g:seoul256_background = 236
+" color seoul256
+
+" seoul256 (light):
+"   Range:   252 (darkest) ~ 256 (lightest)
+"   Default: 253
+let g:seoul256_background = 256
+color seoul256
+
+" color two-firewatch
+" let g:two_firewatch_italics=1
+set background=light
 set termguicolors
 set number
 set cursorline
@@ -41,7 +56,7 @@ function ToggleTextFile()
 		set spell&
 	else
 		let s:istextfile=1
-		set tw=80
+		set tw=100
 		set spell
 	endif
 endfunction
@@ -55,12 +70,16 @@ imap jj <Esc>
 imap kk <Esc>
 vnoremap . :normal .<CR>
 
+" Ensures word-wrap does not split words
+set lbr
+" Indents word-wrapped lines as much as the 'parent' line
+set breakindent
+
 " Turning off some features for latex performance
 au BufNewFile,BufRead *.tex
     \ set nocursorline |
     \ set nornu |
     \ set number |
-    \ set tw=80 |
 	\ set spell spelllang=en_us
 
 " To bring the cursor back to where it was last
@@ -79,4 +98,13 @@ noremap <leader>ldo :LinediffReset<CR>
 
 nnoremap <esc> :noh<return><esc>
 
-set nojoinspaces
+" set nojoinspaces
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+let g:goyo_width=110
+nnoremap <C-j> :Goyo<CR>
+
+filetype plugin on
+
