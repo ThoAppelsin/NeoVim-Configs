@@ -9,12 +9,16 @@ Plug 'AndrewRadev/linediff.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'rickhowe/diffchar.vim'
+Plug 'vim-python/python-syntax'
 call plug#end()
+
+let g:vimtex_view_general_viewer = "SumatraPDF"
 
 " seoul256 (dark):
 "   Range:   233 (darkest) ~ 239 (lightest)
 "   Default: 237
-" let g:seoul256_background = 236
+" let g:seoul256_background = 233
 " color seoul256
 
 " seoul256 (light):
@@ -107,4 +111,35 @@ let g:goyo_width=110
 nnoremap <C-j> :Goyo<CR>
 
 filetype plugin on
+
+function RunScript()
+	if &filetype ==# 'julia'
+		write
+		belowright split
+		term julia %
+	elseif &filetype ==# 'python'
+		write
+		belowright split
+		term python %
+	elseif &filetype ==# ''
+		quit
+	endif
+endfunction
+
+nnoremap <C-return> :call RunScript()<CR>
+
+" Adds --shell-escape to vimtex/latexmk
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \   '-shell-escape',
+    \ ],
+    \}
+
+let g:python_highlight_all = 1
+
+
 
